@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <h3>{{ cust_rec.first_name }} {{ cust_rec.last_name }} <i class="bi bi-person-circle"></i></h3>
+            
+        </div>
+    </div>
+
+   
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <!-- Tab Navigation (Nav Pills) -->
+            <ul class="nav nav-pills card-header-pills justify-content-center" id="customerTabs" role="tablist">
+                <li class="nav-item me-3" role="presentation">
+                    <a class="nav-link active" id="personal-info-tab" data-bs-toggle="pill" href="#personal-info" role="tab" aria-controls="personal-info" aria-selected="true">
+                        <i class="bi bi-person-circle"></i> Personal Info
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="subscription-details-tab" data-bs-toggle="pill" href="#subscription-details" role="tab" aria-controls="subscription-details" aria-selected="false">
+                        <i class="bi bi-credit-card"></i> Subscription Details
+                    </a>
+                </li>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body">
+            <!-- Tab Content -->
+            <div class="tab-content mt-4">
+                <!-- Personal Info Tab -->
+                <div class="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
+                    <div class="row">
+                        <!-- Left Column -->
+                        <div class="col-md-5">
+                            <dl class="row">
+                                <dt class="col-sm-4"><i class="bi bi-person-badge-fill"></i> ID:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.id }}</dd>
+
+                                <dt class="col-sm-4"><i class="bi bi-envelope-arrow-down-fill"></i></i> Email:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.email }}</dd>
+
+                                <dt class="col-sm-4"><i class="bi bi-telephone-fill"></i> Phone:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.phone }}</dd>
+                            </dl>
+                        </div>
+
+                        <!-- Separator -->
+                        <div class="col-md-2 text-center">
+                            <div class="vr" style="height: 100%; border-right: 1px solid #dee2e6;"></div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="col-md-5">
+                            <dl class="row">
+                                <dt class="col-sm-4">City :</dt>
+                                <dd class="col-sm-8">{{ cust_rec.city }}</dd>
+
+                                <dt class="col-sm-4">State:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.state }}</dd>
+
+                                <dt class="col-sm-4">Zipcode:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.zipcode }}</dd>
+
+                                <dt class="col-sm-4">Created At:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.created_at|date:"Y-m-d H:i" }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subscription Details Tab -->
+                <div class="tab-pane fade " id="subscription-details" role="tabpanel" aria-labelledby="subscription-details-tab">
+                    <div class="row">
+                        <!-- Left Column -->
+                        <div class="col-md-5">
+                            <dl class="row">
+                                <dt class="col-sm-4">Contract:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.contract }}</dd>
+
+                                <dt class="col-sm-4">Tenure:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.tenure }} months</dd>
+
+                                <dt class="col-sm-4">Paperless Billing:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.paperless_billing }}</dd>
+
+                                <dt class="col-sm-4">Phone Service:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.phone_service }}</dd>
+
+                                <dt class="col-sm-4">Multiple Lines:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.multiple_lines }}</dd>
+
+                                <dt class="col-sm-4">Online Security:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.online_security }}</dd>
+
+                                <dt class="col-sm-4">Tech Support:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.tech_support }}</dd>
+                                
+                            </dl>
+                        </div>
+
+                       
+                        <div class="col-md-2 text-center">
+                            <div class="vr" style="height: 100%; border-right: 1px solid #dee2e6;"></div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="col-md-5">
+                            <dl class="row">
+                                <dt class="col-sm-4" style="white-space: nowrap;">Monthly Charges:</dt>
+                                <dd class="col-sm-8" style="white-space: nowrap;">{{ cust_rec.monthly_charges }}</dd>
+
+                                <dt class="col-sm-4">Total Charges:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.total_charges }}</dd>
+
+                                <dt class="col-sm-4">Payment Method:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.payment_method }}</dd>
+
+                                <dt class="col-sm-4">Internet Service:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.internet_service }}</dd>
+
+                                <dt class="col-sm-4" style="white-space: nowrap;" >Device Protection:</dt>
+                                <dd class="col-sm-8" style="white-space: nowrap;" >{{ cust_rec.device_protection }}</dd>
+
+                                <dt class="col-sm-4" style="white-space: nowrap;">Streaming Movies:</dt>
+                                <dd class="col-sm-8" style="white-space: nowrap;">{{ cust_rec.streaming_movies }}</dd>
+
+                                <dt class="col-sm-4">Streaming TV:</dt>
+                                <dd class="col-sm-8">{{ cust_rec.streaming_tv }}</dd>
+
+                                
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Card Footer with Buttons -->
+        <div class="card-footer text-center">
+            <a href="{% url "update_record" cust_rec.id %}" class="btn btn-primary mx-2">Update <i class="bi bi-pencil-square"></i></a>
+            <a href="{% url 'delete_record' cust_rec.id %}" class="btn btn-danger mx-2">Delete <i class="bi bi-trash"></i></a>
+            <a href="#" class="btn btn-secondary mx-2">Predict Churn <i class="bi bi-bar-chart"></i></a>
+            <a href="#" class="btn btn-secondary mx-2">Predict Customer category <i class="bi bi-tag"></i></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

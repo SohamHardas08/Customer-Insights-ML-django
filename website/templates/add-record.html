@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card" style="background-color: #d9edf7; margin-bottom: 20px; height: 70px;">
+                    <div class="card-body">
+                        <h3 class="mb-4 text-center">Add Customer Record</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- Personal Information Section -->
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-7">
+                    <div class="card bg-primary mb-3">
+                        <div class="card-body py-2">
+                            <h5 class="mb-0 text-center text-white"><i class="bi bi-person-circle"></i> Personal Information</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <div class="errors">
+                            {% for error in form.first_name.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <div class="errors">
+                            {% for error in form.last_name.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="errors">
+                            {% for error in form.email.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.phone.label_tag }}
+                    {{ form.phone }}
+                    {% if form.phone.errors %}
+                        <div class="errors">
+                            {% for error in form.phone.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.city.label_tag }}
+                    {{ form.city }}
+                    {% if form.city.errors %}
+                        <div class="errors">
+                            {% for error in form.city.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.state.label_tag }}
+                    {{ form.state }}
+                    {% if form.state.errors %}
+                        <div class="errors">
+                            {% for error in form.state.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.zipcode.label_tag }}
+                    {{ form.zipcode }}
+                    {% if form.zipcode.errors %}
+                        <div class="errors">
+                            {% for error in form.zipcode.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <hr>
+
+            <!-- Subscription Details Section -->
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-7">
+                    <div class="card bg-primary mb-3">
+                        <div class="card-body py-2 px-2">
+                            <h5 class="mb-0 text-center text-white"><i class="bi bi-credit-card"></i> Subscription Details</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    {{ form.contract.label_tag }}
+                    {{ form.contract }}
+                    {% if form.contract.errors %}
+                        <div class="errors">
+                            {% for error in form.contract.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.tenure.label_tag }}
+                    {{ form.tenure }}
+                    {% if form.tenure.errors %}
+                        <div class="errors">
+                            {% for error in form.tenure.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.monthly_charges.label_tag }}
+                    {{ form.monthly_charges }}
+                    {% if form.monthly_charges.errors %}
+                        <div class="errors">
+                            {% for error in form.monthly_charges.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.total_charges.label_tag }}
+                    {{ form.total_charges }}
+                    {% if form.total_charges.errors %}
+                        <div class="errors">
+                            {% for error in form.total_charges.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.payment_method.label_tag }}
+                    {{ form.payment_method }}
+                    {% if form.payment_method.errors %}
+                        <div class="errors">
+                            {% for error in form.payment_method.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.internet_service.label_tag }}
+                    {{ form.internet_service }}
+                    {% if form.internet_service.errors %}
+                        <div class="errors">
+                            {% for error in form.internet_service.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.online_security.label_tag }}
+                    {{ form.online_security }}
+                    {% if form.online_security.errors %}
+                        <div class="errors">
+                            {% for error in form.online_security.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.tech_support.label_tag }}
+                    {{ form.tech_support }}
+                    {% if form.tech_support.errors %}
+                        <div class="errors">
+                            {% for error in form.tech_support.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.paperless_billing.label_tag }}
+                    {{ form.paperless_billing }}
+                    {% if form.paperless_billing.errors %}
+                        <div class="errors">
+                            {% for error in form.paperless_billing.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.streaming_tv.label_tag }}
+                    {{ form.streaming_tv }}
+                    {% if form.streaming_tv.errors %}
+                        <div class="errors">
+                            {% for error in form.streaming_tv.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.streaming_movies.label_tag }}
+                    {{ form.streaming_movies }}
+                    {% if form.streaming_movies.errors %}
+                        <div class="errors">
+                            {% for error in form.streaming_movies.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.phone_service.label_tag }}
+                    {{ form.phone_service }}
+                    {% if form.phone_service.errors %}
+                        <div class="errors">
+                            {% for error in form.phone_service.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.device_protection.label_tag }}
+                    {{ form.device_protection }}
+                    {% if form.device_protection.errors %}
+                        <div class="errors">
+                            {% for error in form.device_protection.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.multiple_lines.label_tag }}
+                    {{ form.multiple_lines }}
+                    {% if form.multiple_lines.errors %}
+                        <div class="errors">
+                            {% for error in form.multiple_lines.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary mb-3 add-btn"><i class="bi bi-plus-circle-fill"></i> Add Record</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary mb-3 back-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
