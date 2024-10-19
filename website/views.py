@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -7,9 +6,16 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from .forms import Signup,AddRecordForm,NoteForm
 from .models import Record, Note
+from django.views import View
+from django.http import JsonResponse
+import joblib
+import numpy as np
 import pandas as pd
 import openpyxl
-from django.views import View
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 
 
 def login_user(request):
@@ -105,7 +111,7 @@ def update_record(request, ID):
         form = AddRecordForm(request.POST or None, instance = current_record)
         if form.is_valid():
             form.save()
-            messages.sucess('Record has been updated!')
+            messages.success(request, 'Record has been updated!')
             return redirect('home')
         
         return render(request, 'update_record.html',{'form' : form})

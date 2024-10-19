@@ -38,6 +38,10 @@ class Record(models.Model):
     online_security = models.CharField(max_length=20, choices=[
         ('Yes', 'Yes'),
         ('No internet service', 'No internet service'),
+        ('No', 'No')], default = "No")
+    online_backup = models.CharField(max_length=20, choices=[
+        ('Yes', 'Yes'),
+        ('No internet service', 'No internet service'),
         ('No', 'No')], default = "No")   
     tech_support = models.CharField(max_length=20, choices=[
         ('Yes', 'Yes'),
@@ -64,7 +68,7 @@ class Record(models.Model):
         ('No', 'No')], default = "No")
     multiple_lines = models.CharField(max_length=20, choices=[
         ('Yes', 'Yes'),
-        ('No internet service', 'No internet service'),
+        ('No phone service', 'No phone service'),
         ('No', 'No')], default = "No")
     
     
@@ -88,6 +92,7 @@ class Record(models.Model):
             'payment_method': self.payment_method,
             'internet_service': self.internet_service,
             'online_security': self.online_security,
+            'online_backup': self.online_backup,
             'tech_support': self.tech_support,
             'paperless_billing': self.paperless_billing,
             'streaming_tv': self.streaming_tv,
