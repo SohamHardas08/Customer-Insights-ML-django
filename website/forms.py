@@ -130,8 +130,15 @@ class AddRecordForm(forms.ModelForm):
             ('No', 'No'),
         ],
         widget=forms.Select(attrs={'class': 'form-control'}),
-        label='Online Security'
-    )
+        label='Online Security')
+        
+    online_backup = forms.ChoiceField(required=True, choices=[
+        ('Yes', 'Yes'),
+        ('No internet service', 'No internet service'),
+        ('No', 'No')],
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Online Backup')
+    
     tech_support = forms.ChoiceField(
         required=True,
         choices=[

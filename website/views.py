@@ -10,11 +10,11 @@ from django.views import View
 from django.http import JsonResponse
 import joblib
 import numpy as np
-import pandas as pd
 import openpyxl
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from .pre_processing import *
 
 
 
@@ -179,3 +179,32 @@ def edit_note(request, note_id, ID):
         return render(request, 'notes.html',{'form' : form})
     else:
         return redirect('login')
+
+        
+# prediction logic
+
+class PredictChurnAPIView(APIView):
+    def post(self, request, ID):
+        try:
+            customer = Record.objects.get(id=ID)
+            prediction, probability = get_predictions(customer)
+            
+            return Response({
+                'status': 'success',
+                'customer_id': ID,
+                'prediction': prediction,
+                'probability': float(probability)
+            }, status=status.HTTP_200_OK)
+        
+        except Record.DoesNotExist:
+            return Response({
+                'status': 'error',
+                'message': 'Customer not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+        
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)
+

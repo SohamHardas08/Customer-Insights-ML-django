@@ -4,10 +4,11 @@
 
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow-sm" style="background-color: #d9edf7; margin-bottom: 20px; height: 70px;">
+            <div class="col-md-12">
+                <div class="card shadow-sm" style="background: linear-gradient(135deg, #4a75c3 0%, #9ba8c3 100%);
+                 margin-bottom: 20px; height: 70px;">
                     <div class="card-body">
-                        <h3 class="mb-4 text-center">Add Customer Record</h3>
+                        <h3 class="mb-4 text-center text-white">Add Customer Record</h3>
                     </div>
                 </div>
             </div>
@@ -20,7 +21,7 @@
             <!-- Personal Information Section -->
             <div class="row justify-content-center">
                 <div class="col-lg-3 col-sm-7">
-                    <div class="card bg-primary mb-3 shadow-sm">
+                    <div class="card bg-dark mb-3 shadow-sm">
                         <div class="card-body py-2">
                             <h5 class="mb-0 text-center text-white"><i class="bi bi-person-circle"></i> Personal Information</h5>
                         </div>
@@ -112,7 +113,7 @@
             <!-- Subscription Details Section -->
             <div class="row justify-content-center">
                 <div class="col-lg-3 col-sm-7">
-                    <div class="card bg-primary mb-3 shadow-sm">
+                    <div class="card bg-dark mb-3 shadow-sm">
                         <div class="card-body py-2 px-2">
                             <h5 class="mb-0 text-center text-white"><i class="bi bi-credit-card"></i> Subscription Details</h5>
                         </div>
@@ -192,6 +193,17 @@
                     {% if form.online_security.errors %}
                         <div class="errors">
                             {% for error in form.online_security.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.online_backup.label_tag }}
+                    {{ form.online_backup }}
+                    {% if form.online_backup.errors %}
+                        <div class="errors">
+                            {% for error in form.online_backup.errors %}
                                 {{ error }}<br>
                             {% endfor %}
                         </div>
@@ -278,9 +290,8 @@
 
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-primary mb-3 add-btn"><i class="bi bi-plus-circle-fill"></i> Add Record</button>
-                <a href="{% url 'home' %}" class="btn btn-secondary mb-3 back-btn">Cancel</a>
+                <a href="{% url 'home' %}" class="btn btn-dark mb-3 back-btn">Cancel</a>
             </div>
         </form>
     </div>
 {% endblock %}
-

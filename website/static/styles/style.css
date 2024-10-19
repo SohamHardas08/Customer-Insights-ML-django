@@ -1,4 +1,4 @@
-/* Body background gradient */
+
 body {
     font-family: 'Poppins', sans-serif;
     min-height: 100vh
@@ -128,8 +128,6 @@ body {
 }
 
 /* register page */
-
-
 .custom-card {
     border: 1px solid #007bff;
     transition: box-shadow 0.3s ease;
@@ -154,7 +152,7 @@ body {
 }
 
 
-/* Table styling */
+/* Home Page styling */
 .table {
     border: 2px solid #343a40;
 }
@@ -291,3 +289,5 @@ thead th {
 .nav-pills .nav-item .nav-link.active::after {
     transform: scaleX(1); 
 }
+
+

@@ -1,56 +1,76 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <div class="container mt-4">
-     <div class="card shadow-sm mb-5 ">
-        <div class="card-header bg-dark text-white">
-            <h3 class="text-center">Customer Records <i class="bi bi-clipboard2-data-fill"></i></h3>
+    
+    <div class="card shadow-sm mb-4" style='border-radius: 10px;'>
+        <div class="card-body" style="background: linear-gradient(135deg, #4a75c3 0%, #9ba8c3 100%); border-radius: 10px;">
+            <h3 class="text-center text-white mb-0">
+                <i class="bi bi-clipboard2-data-fill me-2"></i>Customer Records
+            </h3>
         </div>
-        <div class="card-body">
-          <div class="text-end mb-3">
-            <div class="dropdown">
-                <button class="btn btn-success dropdown-toggle export-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-file-earmark-arrow-down"></i> Export
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="exportDropdown">
-                    <li><a class="dropdown-item" href="{% url 'export_data' 'csv' %}"><i class="bi bi-filetype-csv"></i> Export to CSV</a></li>
-                    <li><a class="dropdown-item" href="{% url 'export_data' 'xlsx' %}"><i class="bi bi-filetype-xlsx"></i> Export to Excel (.xlsx)</a></li>
-                </ul>
-            </div>
-           </div>
-           <div class="input-group mb-3" style="width: 50%;">
-            <input type="text" id="inputText" class="form-control" placeholder="Search by name" onkeyup="filterRecords()">
-            <button class="btn btn-outline-success" type="button" id="search-button" onclick="filterRecords()">
-                <i class="bi bi-search"></i>
-           </div>
-        
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered table-striped">
-                    <thead class="thead-dark">
-                        <tr class ="table-primary">
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Contract</th>
-                            <th>Tenure</th>
-                            <th>Payment Method</th>
-                            <th>Internet Service</th>
-                            <th>Online Security</th>
-                            <th>Tech Support</th>
-                            <th>Monthly charges</th>
-                            <th>Total Charges</th>
-                            <th>Assign tasks</th>
+    </div>
 
+    
+    <div class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="inputText" class="form-control" placeholder="Search by name" onkeyup="filterRecords()">
+                        <button class="btn btn-outline-primary" type="button" id="search-button" onclick="filterRecords()">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle export-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-file-earmark-arrow-down me-1"></i> Export
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'export_data' 'csv' %}">
+                                <i class="bi bi-filetype-csv me-2"></i> Export to CSV
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'export_data' 'xlsx' %}">
+                                <i class="bi bi-filetype-xlsx me-2"></i> Export to Excel (.xlsx)
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="table-primary">
+                            <th class="align-middle">ID</th>
+                            <th class="align-middle">Name</th>
+                            <th class="align-middle">Contract</th>
+                            <th class="align-middle">Tenure</th>
+                            <th class="align-middle">Payment Method</th>
+                            <th class="align-middle">Internet Service</th>
+                            <th class="align-middle">Online Security</th>
+                            <th class="align-middle">Tech Support</th>
+                            <th class="align-middle">Monthly charges</th>
+                            <th class="align-middle">Total Charges</th>
+                            <th class="align-middle">Assign tasks</th>
                         </tr>
                     </thead>
                     <tbody id="records-container">
-                    
                     </tbody>
                 </table>
-                <p id="no-records" class="text-center" style="display: none;">No records found</p>
+                <p id="no-records" class="text-center text-muted" style="display: none;">
+                    <i class="bi bi-inbox me-2"></i>No records found
+                </p>
             </div>
         </div>
-        <div class="card-footer text-muted text-center">
-            Total Records: <span id="total-records">{{ records.count }}</span>
+        
+        <div class="card-footer bg-light py-3">
+            <div class="text-center">
+                <span class="fw-medium">Total Records:</span> 
+                <span id="total-records" class="badge bg-primary">{{ records.count }}</span>
+            </div>
         </div>
     </div>
 </div>

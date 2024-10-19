@@ -4,11 +4,11 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
 
-        <div class="col-md-6 col-lg-4">
-            <div class="card shadow-sm" style="background-color:#f0f4f8; margin-bottom: 20px; height: 70px;">
+        <div class="col-md-12">
+            <div class="card shadow-sm" style="background: linear-gradient(135deg, #4a75c3 0%, #9ba8c3 100%); margin-bottom: 20px; height: 70px;">
                 
                 <div class="card-body">
-                    <h3 class="mb-4 text-center"><i class="bi bi-journal-plus"></i> Notes for {{customer_record.first_name}} {{customer_record.last_name}}</h3>
+                    <h3 class="mb-4 text-center text-white"><i class="bi bi-journal-plus"></i> Notes for {{customer_record.first_name}} {{customer_record.last_name}}</h3>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col text-center mb-4">
-                <a href="{% url 'home' %}" class="btn btn-secondary me-3 back-btn"><i class="bi bi-arrow-left-square-fill"></i> Back</a>
+                <a href="{% url 'home' %}" class="btn btn-dark me-3 back-btn"><i class="bi bi-arrow-left-square-fill"></i> Back</a>
                 <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
                     <i class="bi bi-file-earmark-plus-fill"></i> Add Note
                 </button>
@@ -72,9 +72,10 @@
                                 <label class="form-label">Title</label>
                                 <input type="text" class="form-control" name="title" value="{{ note.title }}">
                             </div>
+                            
                             <div class="mb-3">
                                 <label class="form-label">Content</label>
-                                <input type="text" class="form-control" name="content" value="{{ note.content }}">  <!-- Change here -->
+                                <input type="text" class="form-control" name="content" value="{{ note.content }}">  
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -90,7 +91,8 @@
             <div class="custom-card">
                 <div class="card-body">
                     <h5 class="card-title">{{ note.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Created at: {{ note.created_at|date:"Y-m-d H:i:s" }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted ">Created at: {{ note.created_at|date:"Y-m-d H:i:s" }}</h6>
+                    <hr>
                     <p class="card-text">{{ note.content }}</p>
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#editNoteModal--{{ note.id }}">

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
-from .views import NoteView
+from .views import NoteView, PredictChurnAPIView
 
 urlpatterns = [
     path('', views.home, name = 'home'),
@@ -11,6 +11,7 @@ urlpatterns = [
     path('records/', views.records, name ='records'),
     path('export/<str:format>/', views.export_data, name='export_data'),
     path('details/<int:ID>/', views.details, name='details'),
+    path('predict/<int:ID>/', PredictChurnAPIView.as_view(), name='predict'),
     path('delete_record/<int:ID>/', views.delete_record, name='delete_record'),
     path('update_record/<int:ID>/', views.update_record, name='update_record'),
     path('add_record/', views.add_record, name='add_record'),
