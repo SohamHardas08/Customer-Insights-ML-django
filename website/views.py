@@ -1,20 +1,16 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
-from .forms import Signup,AddRecordForm,NoteForm
-from .models import Record, Note
 from django.views import View
-from django.http import JsonResponse
-import joblib
-import numpy as np
-import openpyxl
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from .forms import Signup, AddRecordForm, NoteForm
+from .models import Record, Note
 from .pre_processing import *
+from datetime import datetime
 
 
 
@@ -112,7 +108,7 @@ def update_record(request, ID):
         if form.is_valid():
             form.save()
             messages.success(request, 'Record has been updated!')
-            return redirect('home')
+            return redirect('details', ID=ID)
         
         return render(request, 'update_record.html',{'form' : form})
         
@@ -134,6 +130,28 @@ class NoteView(View):
     def get(self,request,ID, note_id = None):
         customer_record = Record.objects.get(id=ID)
         notes = Note.objects.filter(customer_id = ID, user = request.user)
+        
+        # deadline progress bar
+        now = datetime.now().date()
+        deadline_pcts = []
+        for note in notes:
+            
+            created_at = note.created_at.date()
+            if note.deadline:
+                total_days = (note.deadline- created_at).days
+                days_remaining = (note.deadline - now).days
+            
+                if days_remaining <=0:
+                    percentage = 100
+                else:
+                    if total_days > 0:
+                        percentage = ((total_days - days_remaining) / total_days) *100
+                    else:
+                        percentage = 100
+            else:
+                percentage=0
+            deadline_pcts.append((note.id, percentage))
+            
         form = NoteForm()
         
         if note_id:
@@ -141,7 +159,8 @@ class NoteView(View):
             form = NoteForm(instance=note)
             
             
-        return render(request,'notes.html', {'notes': notes, 'form' : form ,'customer_record': customer_record ,'note_id' : note_id})
+        return render(request,'notes.html', {'notes': notes, 'form' : form ,'customer_record': customer_record ,
+                             'note_id' : note_id, 'deadline_pcts': deadline_pcts})
     
     def post(self,request,ID):
         form =  NoteForm(request.POST or None)
@@ -156,29 +175,30 @@ class NoteView(View):
         notes = Note.objects.filter(customer_id=ID, user=request.user)
         return render(request, 'notes.html', {'notes': notes, 'form': form, 'customer_id': ID})
     
-    
-def delete_note(request, ID, note_id):
-    if request.user.is_authenticated:
-        del_note = Note.objects.get(id = note_id)
-        del_note.delete()
-        messages.success(request, 'Note deleted successfully!')
-        return redirect('notes', ID = ID)
-    else:
-        messages.error(request, 'Login to delete the note!')
+    def delete(request, ID, note_id):
+        if request.user.is_authenticated:
+            del_note = Note.objects.get(id = note_id)
+            del_note.delete()
+            messages.success(request, 'Note deleted successfully!')
+            return redirect('notes', ID = ID)
+        else:
+            messages.error(request, 'Login to delete the note!')
         return redirect('login')
     
-def edit_note(request, note_id, ID):
-    if request.user.is_authenticated:
-        current_note = Note.objects.get(id = note_id ,customer_id = ID, user= request.user)
-        form = NoteForm(request.POST or None, instance = current_note)
-        if form.is_valid():
-            form.save()
-            messages.success(request,'Note has been updated!')
-            return redirect('notes', ID=ID)
+    def put(request, ID, note_id):
+        if request.user.is_authenticated:
+            current_note = Note.objects.get(id = note_id ,customer_id = ID, user= request.user)
+            form = NoteForm(request.POST or None, instance = current_note)
+            if form.is_valid():
+                form.save()
+                messages.success(request,'Note has been updated!')
+                return redirect('notes', ID=ID)
         
-        return render(request, 'notes.html',{'form' : form})
-    else:
-        return redirect('login')
+            return render(request, 'notes.html',{'form' : form})
+        else:
+            return redirect('login')
+    
+    
 
         
 # prediction logic
@@ -193,7 +213,7 @@ class PredictChurnAPIView(APIView):
                 'status': 'success',
                 'customer_id': ID,
                 'prediction': prediction,
-                'probability': float(probability)
+                'probability': int(probability)
             }, status=status.HTTP_200_OK)
         
         except Record.DoesNotExist:
@@ -207,4 +227,24 @@ class PredictChurnAPIView(APIView):
                 'status': 'error',
                 'message': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
+            
+     
+    # testing the API view        
+    def get(self,request, ID):
+        try:
+            customer = Record.objects.get(id=ID)
+            return Response({
+                'status': 'success',
+                'customer_id':customer.id,
+                'first_name':customer.first_name,
+                'last_name':customer.last_name 
+            }, status = status.HTTP_200_OK)
+        except Record.DoesNotExist:
+            return Response({
+                'status' : 'error',
+                'msg' : 'customer not found'
+            }, status = status.HTTP_404_NOT_FOUND)
+            
+   
+        
 

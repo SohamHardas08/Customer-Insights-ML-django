@@ -1,40 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
+<div class="container">
+    <div class="col-md-12">
+        <div class="card shadow-sm" style="background: linear-gradient(135deg, #007bff, #00b894); margin-bottom: 20px;">
+            <div class="card-body text-center">
+                <h3 class="mt-2 mb-2 text-white ">
+                    <i class="bi bi-journal-plus"></i> Task management for {{ customer_record.first_name }} {{ customer_record.last_name }}
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <div class="col-md-12">
-            <div class="card shadow-sm" style="background: linear-gradient(135deg, #4a75c3 0%, #9ba8c3 100%); margin-bottom: 20px; height: 70px;">
-                
-                <div class="card-body">
-                    <h3 class="mb-4 text-center text-white"><i class="bi bi-journal-plus"></i> Notes for {{customer_record.first_name}} {{customer_record.last_name}}</h3>
+<div class="container">
+    <div class="col text-center mb-4">
+        <div class="card" style="background-color: #f8f9fa; border-radius: 10px; border: 1px solid #dee2e6;">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'home' %}" class="btn btn-dark me-3 back-btn" style="border-radius: 5px; padding: 10px 20px;">
+                        <i class="bi bi-arrow-left-square-fill"></i>
+                    </a>
+                    <button type="button" class="btn mx-2 back-btn text-white" 
+                    style="background-color:#3b82f6;" data-bs-toggle="modal" 
+                    data-bs-target="#addNoteModal" style="border-radius: 5px; padding: 10px 20px;">
+                        <i class="bi bi-file-earmark-plus-fill"></i> Add Task
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    <hr>
-
-    <div class="row">
-        <div class="col text-center mb-4">
-                <a href="{% url 'home' %}" class="btn btn-dark me-3 back-btn"><i class="bi bi-arrow-left-square-fill"></i> Back</a>
-                <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
-                    <i class="bi bi-file-earmark-plus-fill"></i> Add Note
-                </button>
-            </div>
-        </div>
-    </div>
+</div>
     
     <!--Add Note Modal -->
     <div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="addNoteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add a New Note</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header"><div class="card w-100" style="background: linear-gradient(135deg, #007bff, #00b894)">
+                    <div class="card-body">
+                        <h5 class="modal-title text-center text-white">Add a New Note</h5>
+                    </div>
+                  </div>      
                 </div>
                 <div class="modal-body">
-                    <form method="POST">
+                    <form method="POST" id="note-form">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label class="form-label">Title</label>
@@ -44,9 +53,19 @@
                             <label class="form-label">Content</label>
                             {{ form.content }}
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Set Priority</label>
+                            {{ form.priority }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Set Deadline</label>
+                            <input type="date" class="form-control" name="deadline" id="add-deadline" onfocus="disablePrevious()">
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save Note</button>
+                            <button type="submit" class="btn btn-primary">Save Task</button>
                         </div>
                     </form>
                 </div>
@@ -62,12 +81,14 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Note</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="card w-100" style="background: linear-gradient(135deg, #007bff, #00b894)">
+                            <div class="card-body">
+                                <h5 class="modal-title text-center text-white">Edit Task</h5>
+                            </div>
+                          </div>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{% url 'edit_note' customer_record.id note.id %}">
-                            {% csrf_token %}
+                        <form method="POST" action="{% url 'edit_note' customer_record.id note.id %}">                            {% csrf_token %}
                             <div class="mb-3">
                                 <label class="form-label">Title</label>
                                 <input type="text" class="form-control" name="title" value="{{ note.title }}">
@@ -77,9 +98,24 @@
                                 <label class="form-label">Content</label>
                                 <input type="text" class="form-control" name="content" value="{{ note.content }}">  
                             </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Set Priority</label>
+                                <select name="priority" class="form-control">
+                                    <option value="Low" {% if note.priority == 'Low' %}selected{% endif %}>Low</option>
+                                    <option value="Medium" {% if note.priority == 'Medium' %}selected{% endif %}>Medium</option>
+                                    <option value="High" {% if note.priority == 'High' %}selected{% endif %}>High</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Set Deadline</label>
+                                <input type="date" class="form-control" name = "deadline" id="edit-deadline" 
+                                value = "{{ note.deadline|date:"d-m-y" }}" onfocus = "disablePrevious()">
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Update Note</button>
+                                <button type="submit" class="btn btn-primary">Update Task</button>
                             </div>
                         </form>
                     </div>
@@ -88,29 +124,62 @@
         </div>
 
         <div class="col-md-4 mb-4">
-            <div class="custom-card">
+            <div class="task-card">
                 <div class="card-body">
                     <h5 class="card-title">{{ note.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted ">Created at: {{ note.created_at|date:"Y-m-d H:i:s" }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Created at: {{ note.created_at|date:"d-m-y" }}</h6>
                     <hr>
                     <p class="card-text">{{ note.content }}</p>
-                    <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#editNoteModal--{{ note.id }}">
-                            <i class="bi bi-pencil-square"></i> Edit
+                    <span class="badge mt-2 mb-2
+                        {% if note.priority == 'Low' %}
+                            bg-success
+                        {% elif note.priority == 'Medium' %}
+                            bg-warning
+                        {% elif note.priority == 'High' %}
+                            bg-danger
+                        {% endif %}
+                        text-white p-2" style="font-size:13px;">
+                        Priority level: {{ note.priority }}
+                    </span>
+                    <br>
+                    <h6 class="text-muted">Time till deadline: {{ note.deadline }}</h6>
+                    <div class="progress note-progress" style="height: 20px; margin-bottom: 10px;">
+                        {% for note_id, deadline_pct in deadline_pcts %}
+                            {% if note_id == note.id %}
+                              
+                                <div class="note-progress-bar 
+                                    {% if deadline_pct > 50 %}bg-warning
+                                    {% elif deadline_pct > 80 %}bg-red
+                                    {% else %}bg-success{% endif %}" 
+                                    role="progressbar" 
+                                    style="width: {{ deadline_pct }}%;"
+                                    aria-valuenow="{{ deadline_pct }}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-start align-items-center">
+                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editNoteModal--{{ note.id }}">
+                            <i class="bi bi-pencil-square"></i>
                         </button>
                         <form action="{% url 'delete_note' customer_record.id note.id %}" method="POST" style="display: inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger back-btn"><i class="bi bi-trash3-fill"></i> Delete</button>
+                            <button type="submit" class="btn btn-danger back-btn">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
     {% endfor %}
 {% else %}
     <div class="col-12">
         <div class="alert alert-info" role="alert">
-            No notes available for this customer.
+            No tasks available for this customer.
         </div>
     </div>
 {% endif %}

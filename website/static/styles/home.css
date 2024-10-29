@@ -1,0 +1,93 @@
+
+.table {
+    border: 2px solid #343a40;
+}
+
+.table th,
+.table td {
+    border: 2px solid #343a40;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f0f8ff; 
+    transition: background-color 0.3s ease; 
+}
+
+
+.table-bordered th, 
+.table-bordered td {
+    border-color: #dee2e6;
+}
+
+
+.card-footer {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+thead th {
+    text-align: center;
+    
+}
+
+
+.table td, 
+.table th {
+    padding: 0.75rem 1.25rem;
+}
+
+
+.export-btn {
+    background: linear-gradient(135deg, #007bff, #00b894);
+
+}
+.export-btn:hover {
+    transform: scale(1.05); 
+}
+
+/* details page styling */
+.nav-pills {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 5px;
+}
+
+
+.nav-pills .nav-item .nav-link {
+    position: relative;
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    color: #64748b;
+    background: transparent;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+
+.nav-pills .nav-item .nav-link.active {
+    color: #1e293b;
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+
+.nav-pills::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    left: 0;
+    width: var(--nav-width, 0);
+    transform: translateX(var(--nav-left, 0));
+    background: linear-gradient(to right, #3b82f6, #60a5fa);
+    transition: transform 0.3s ease, width 0.3s ease;
+    border-radius: 1.5px;
+}
+
+
+.nav-pills .nav-item .nav-link:hover {
+    color: #1e293b;
+    background-color: rgba(59, 130, 246, 0.05);
+}   

@@ -16,6 +16,6 @@ urlpatterns = [
     path('update_record/<int:ID>/', views.update_record, name='update_record'),
     path('add_record/', views.add_record, name='add_record'),
     path('notes/<int:ID>/', NoteView.as_view(), name='notes'),
-    path('notes/<int:ID>/edit_note/<int:note_id>/', views.edit_note, name='edit_note'),
-    path('notes/<int:ID>/delete_note/<int:note_id>/',views.delete_note, name='delete_note'),
+    path('notes/<int:ID>/edit/<int:note_id>/', NoteView.put, name='edit_note'),
+    path('notes/<int:ID>/delete/<int:note_id>/', NoteView.delete, name='delete_note'),
 ] 

@@ -1,6 +1,4 @@
 from django.db import models
-
-from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -106,9 +104,13 @@ class Record(models.Model):
 class Note(models.Model):
     customer = models.ForeignKey(Record, on_delete=models.CASCADE, related_name='notes')
     title = models.CharField(max_length=100)
-    content = models.TextField() 
+    content = models.TextField()
+    priority = models.CharField(max_length=10, choices =[('Low','Low')
+                                                         ,('Medium','Medium'),('High','High')], default='Low')
+    deadline = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
 
     def __str__(self):
         return self.title

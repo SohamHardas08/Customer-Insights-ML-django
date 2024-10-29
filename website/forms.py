@@ -2,6 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from .models import Record, Note
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 class Signup(UserCreationForm):
     #custom field
@@ -213,14 +215,27 @@ class AddRecordForm(forms.ModelForm):
 class NoteForm(forms.ModelForm):
     title = forms.CharField(
         required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        widget=forms.TextInput(attrs={'class': 'form-control'})
         )
     
     content = forms.CharField(
         required=True,
-        widget=forms.Textarea(attrs={'rows':3,'class': 'form-control'}),  
+        widget=forms.Textarea(attrs={'rows':3,'class': 'form-control'})
+    )
+    deadline = forms.DateField(
+        required=False,  
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control' ,'id':'deadline'}),
+        input_formats = ['%Y-%m-%d']
+    )
+    priority = forms.ChoiceField(
+        required=True,
+        choices=[('Low','Low')
+                ,('Medium','Medium'),('High','High')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    
     )
     
     class Meta:
         model = Note
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'priority','deadline']
+        

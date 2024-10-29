@@ -2,37 +2,48 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'home' %}">
-          <img src="{% static 'images/insights.png' %}" width="30" height="30" class="d-inline-block align-text-top">
-          CRM
+          <img src="{% static 'images/group.png' %}" width="30" height="25" class="mb-2">
+          Customer Tracker
       </a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {%if user.is_authenticated%}
-          <li class="nav-item">
-            <a class="nav-link nav-link-underline" href="{% url "add_record" %}">Add Records</a>
-          </li>
-        {% endif %}
-        </ul>
-     
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link nav-link-underline" href="{% url 'add_record' %}"><i class="bi bi-person-add"></i> Add Record</a>
+              </li>
+              
+            {% endif %}
+          </ul>
+
+         
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            {%if user.is_authenticated%}
+            {% if user.is_authenticated %}
               <li class="nav-item">
-                  <a class="nav-link nav-link-underline btn-outline-primary" href="{% url 'logout' %}"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                <a class="nav-link nav-link-underline btn-outline-primary" href="{% url 'logout' %}">
+                  <i class="bi bi-box-arrow-left"></i> Logout
+                </a>
               </li>
-              {% else %}
+            {% else %}
               <li class="nav-item">
-                  <a class="nav-link nav-link-underline btn-outline-primary" href="{% url 'register' %}"><i class="bi bi-check-circle"></i> Register</a>
+                <a class="nav-link nav-link-underline btn-outline-primary" href="{% url 'register' %}">
+                  <i class="bi bi-check-circle"></i> Register
+                </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link nav-link-underline btn-outline-primary" href="{% url 'home' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                <a class="nav-link nav-link-underline btn-outline-primary" href="{% url 'home' %}">
+                  <i class="bi bi-box-arrow-in-right"></i> Login
+                </a>
               </li>
-              {% endif %}
+            {% endif %}
           </ul>
       </div>
   </div>
 </nav>
+
